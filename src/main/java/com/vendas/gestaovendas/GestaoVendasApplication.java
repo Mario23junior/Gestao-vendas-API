@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @EntityScan(basePackages = {"com.vendas.gestaovendas.model"})
 @EnableJpaRepositories(basePackages = {"com.vendas.gestaovendas.repository"})
-@ComponentScan(basePackages = {"com.vendas.gestaovendas.Service" ,"com.vendas.gestaovendas.Controller"})
+@ComponentScan(basePackages = {"com.vendas.gestaovendas.Service" ,"com.vendas.gestaovendas.Controller","com.vendas.gestaovendas.Exceptions"})
 @SpringBootApplication
 public class GestaoVendasApplication {
 
