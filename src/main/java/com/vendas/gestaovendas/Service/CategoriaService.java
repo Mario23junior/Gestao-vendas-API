@@ -3,6 +3,8 @@ package com.vendas.gestaovendas.Service;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.BeanUtils;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.vendas.gestaovendas.model.Categoria;
@@ -27,5 +29,18 @@ public class CategoriaService {
 	
 	public Categoria save(Categoria categoria) {
 		return categoriaRepository.save(categoria);
+	}
+	
+	public Categoria atualizarData(Long codigo, Categoria categoria) {
+		Categoria categoriaSalvar = validarCategoriaExist(codigo);
+		BeanUtils.copyProperties(categoria, categoriaSalvar,"codigo");
+		return categoriaRepository.save(categoriaSalvar);
+ 	}
+	public Categoria validarCategoriaExist(Long codigo) {
+		Optional<Categoria> categoria = listByIdData(codigo);
+		if(categoria.isEmpty()) {
+			throw new EmptyResultDataAccessException(1);
+		}
+		return categoria.get();
 	}
 }
