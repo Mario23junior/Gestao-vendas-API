@@ -43,4 +43,35 @@ public class CategoriaService {
 		}
 		return categoria.get();
 	}
+	
+	
+	public void delete(Long codigo) {
+		categoriaRepository.deleteById(codigo);
+	}
+	
+	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
