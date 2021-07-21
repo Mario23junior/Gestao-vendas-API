@@ -34,7 +34,16 @@ public class TratamentosErrosHandlerExcecao extends ResponseEntityExceptionHandl
 	   String msgUsuario = "Recurso não encontrado";
 	   String msgDesenvolvedor = ex.toString();
 	   List<Errors> erro = Arrays.asList(new Errors(msgUsuario, msgDesenvolvedor));
-	   return handleExceptionInternal(ex, erro, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+	   return handleExceptionInternal(ex, erro, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
+	}
+	
+	
+	@ExceptionHandler(RegraNegocioDuplicateDataException.class)
+	public ResponseEntity<Object> handleRegraNegocioDuplicateDataException(RegraNegocioDuplicateDataException ex, WebRequest request){
+		 String msgUsuario = ex.getMessage();
+		   String msgDesenvolvedor = ex.getMessage();
+		   List<Errors> erro = Arrays.asList(new Errors(msgUsuario, msgDesenvolvedor));
+		   return handleExceptionInternal(ex, erro, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
 	}
 
 	private List<Errors> GerarListaDeErros(BindingResult bindingResult) {
