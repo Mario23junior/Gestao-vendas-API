@@ -1,8 +1,10 @@
 package com.vendas.gestaovendas.Exceptions;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
@@ -24,6 +27,14 @@ public class TratamentosErrosHandlerExcecao extends ResponseEntityExceptionHandl
 
 		List<Errors> errors = GerarListaDeErros(ex.getBindingResult());
 		return handleExceptionInternal(ex, errors, headers, HttpStatus.BAD_REQUEST, request);
+	}
+	
+	@ExceptionHandler(EmptyResultDataAccessException.class)
+	public ResponseEntity<Object> handlerEmptyResultDataAcessException(EmptyResultDataAccessException ex, WebRequest request) {
+	   String msgUsuario = "Recurso não encontrado";
+	   String msgDesenvolvedor = ex.toString();
+	   List<Errors> erro = Arrays.asList(new Errors(msgUsuario, msgDesenvolvedor));
+	   return handleExceptionInternal(ex, erro, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
 	}
 
 	private List<Errors> GerarListaDeErros(BindingResult bindingResult) {
