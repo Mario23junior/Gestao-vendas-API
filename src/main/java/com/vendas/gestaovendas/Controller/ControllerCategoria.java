@@ -34,20 +34,20 @@ public class ControllerCategoria {
 		 this.categoriaService = categoriaService;
 	}
 	
-	@ApiOperation(value = "Listar todos os dados")
+	@ApiOperation(value = "Listar todos os dados",nickname = "buscarTodos")
 	@GetMapping
 	public List<Categoria> listAll(){
 		return categoriaService.listAllData();
 	}
 	
-	@ApiOperation(value = "Listando dados por id")
+	@ApiOperation(value = "Listando dados por id" ,nickname = "buscarPorId")
 	@GetMapping("/{codigo}")
 	public ResponseEntity<Optional<Categoria>> listById(@PathVariable Long codigo){
 		Optional<Categoria> categoria = categoriaService.listByIdData(codigo);
 		return categoria.isPresent() ? ResponseEntity.ok(categoria) : ResponseEntity.notFound().build();
  	}
 	
-	@ApiOperation(value = "Salvando dados")
+	@ApiOperation(value = "Salvando dados",nickname = "save")
 	@PostMapping
 	public ResponseEntity<Categoria> save(@Valid @RequestBody Categoria categoria) {
 		 Categoria salvarCategoria = categoriaService.save(categoria);
@@ -56,14 +56,14 @@ public class ControllerCategoria {
 				   .body(salvarCategoria);
 	}
 	
-	@ApiOperation(value = "Atualizando dados")
+	@ApiOperation(value = "Atualizando dados",nickname = "update")
 	@PutMapping("/{codigo}")
 	public ResponseEntity<Categoria> update(@PathVariable Long codigo, @Valid @RequestBody Categoria categoria) {
 		return ResponseEntity.ok(categoriaService.atualizarData(codigo, categoria));
 	}
 	
     
-	@ApiOperation(value = "Deletando dados por id")
+	@ApiOperation(value = "Deletando dados por id",nickname = "delete")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	@DeleteMapping("/{codigo}")
 	public void delete(@PathVariable Long codigo) {
