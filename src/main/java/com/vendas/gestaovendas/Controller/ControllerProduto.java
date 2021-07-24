@@ -17,7 +17,7 @@ import io.swagger.annotations.ApiOperation;
 
 @Api(tags = "Produto")
 @RestController
-@RequestMapping("/categoria{codigoCategoria}/produto")
+@RequestMapping("/categoria/{codigoCategoria}/produto")
 public class ControllerProduto {
     
 	private ProdutoService produtoService;
