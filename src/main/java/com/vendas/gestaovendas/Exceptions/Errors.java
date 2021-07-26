@@ -3,16 +3,26 @@ package com.vendas.gestaovendas.Exceptions;
 public class Errors {
 
 	private String message;
+	private Integer status;
 	private String msgDesenvolvedor;
 
-	public Errors(String message, String msgDesenvolvedor) {
+	public Errors(String message, String msgDesenvolvedor, Integer status) {
 		super();
+		this.status = status;
 		this.message = message;
 		this.msgDesenvolvedor = msgDesenvolvedor;
 	}
 
 	public String getMessage() {
 		return message;
+	}
+	
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
 	}
 
 	public void setMessage(String message) {

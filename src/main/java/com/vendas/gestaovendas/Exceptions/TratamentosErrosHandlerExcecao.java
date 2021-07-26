@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -33,7 +34,8 @@ public class TratamentosErrosHandlerExcecao extends ResponseEntityExceptionHandl
 	public ResponseEntity<Object> handlerEmptyResultDataAcessException(EmptyResultDataAccessException ex, WebRequest request) {
 	   String msgUsuario = "Recurso não encontrado";
 	   String msgDesenvolvedor = ex.toString();
-	   List<Errors> erro = Arrays.asList(new Errors(msgUsuario, msgDesenvolvedor));
+	   Integer statuscode = HttpStatus.BAD_REQUEST.value();
+	   List<Errors> erro = Arrays.asList(new Errors(msgUsuario, msgDesenvolvedor,statuscode));
 	   return handleExceptionInternal(ex, erro, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
 	}
 	
@@ -42,7 +44,17 @@ public class TratamentosErrosHandlerExcecao extends ResponseEntityExceptionHandl
 	public ResponseEntity<Object> handleRegraNegocioDuplicateDataException(RegraNegocioDuplicateDataException ex, WebRequest request){
 		 String msgUsuario = ex.getMessage();
 		   String msgDesenvolvedor = ex.getMessage();
-		   List<Errors> erro = Arrays.asList(new Errors(msgUsuario, msgDesenvolvedor));
+		   Integer statuscode = HttpStatus.BAD_REQUEST.value();
+		   List<Errors> erro = Arrays.asList(new Errors(msgUsuario, msgDesenvolvedor,statuscode));
+		   return handleExceptionInternal(ex, erro, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+	}
+	
+	@ExceptionHandler(DataIntegrityViolationException.class)
+	public ResponseEntity<Object> handleDataIntegrityViolationException(DataIntegrityViolationException ex, WebRequest request){
+		 String msgUsuario = "Categoria não cadastrada para inserção de dados";
+		   String msgDesenvolvedor = ex.toString();
+		   Integer statuscode = HttpStatus.BAD_REQUEST.value();
+		   List<Errors> erro = Arrays.asList(new Errors(msgUsuario, msgDesenvolvedor,statuscode));
 		   return handleExceptionInternal(ex, erro, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
 	}
 
@@ -52,7 +64,7 @@ public class TratamentosErrosHandlerExcecao extends ResponseEntityExceptionHandl
 		bindingResult.getFieldErrors().forEach(FieldError -> {
 			String msgUsuario = tratarMensagemErroParaUsuario(FieldError);
 			String dev = FieldError.toString();
-			errosList.add(new Errors(msgUsuario, dev));
+			errosList.add(new Errors(msgUsuario, dev, null));
 		});
 
 		return errosList;
