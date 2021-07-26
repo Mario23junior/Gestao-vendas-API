@@ -21,6 +21,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 public class TratamentosErrosHandlerExcecao extends ResponseEntityExceptionHandler {
 
 	private final static String VALIDATION_NOT_BLANK = "NotBlank";
+	private final static String VALIDATION_NOT_NULL = "NotNull";
 	private final static String VALIDATION_LENGTH = "Length";
 
 	@Override
@@ -51,7 +52,7 @@ public class TratamentosErrosHandlerExcecao extends ResponseEntityExceptionHandl
 	
 	@ExceptionHandler(DataIntegrityViolationException.class)
 	public ResponseEntity<Object> handleDataIntegrityViolationException(DataIntegrityViolationException ex, WebRequest request){
-		 String msgUsuario = "Categoria não cadastrada para inserção de dados";
+		 String msgUsuario = "Recuso não encontrado";
 		   String msgDesenvolvedor = ex.toString();
 		   Integer statuscode = HttpStatus.BAD_REQUEST.value();
 		   List<Errors> erro = Arrays.asList(new Errors(msgUsuario, msgDesenvolvedor,statuscode));
@@ -64,7 +65,8 @@ public class TratamentosErrosHandlerExcecao extends ResponseEntityExceptionHandl
 		bindingResult.getFieldErrors().forEach(FieldError -> {
 			String msgUsuario = tratarMensagemErroParaUsuario(FieldError);
 			String dev = FieldError.toString();
-			errosList.add(new Errors(msgUsuario, dev, null));
+			Integer status = HttpStatus.BAD_REQUEST.value();
+			errosList.add(new Errors(msgUsuario, dev, status));
 		});
 
 		return errosList;
@@ -73,6 +75,10 @@ public class TratamentosErrosHandlerExcecao extends ResponseEntityExceptionHandl
 	private String tratarMensagemErroParaUsuario(FieldError fieldError) {
 		if (fieldError.getCode().equals(VALIDATION_NOT_BLANK)) {
 			return fieldError.getDefaultMessage().concat(" é obrigatorio");
+		}
+		
+		if (fieldError.getCode().equals(VALIDATION_NOT_NULL)) {
+			return fieldError.getDefaultMessage().concat(" é obrigatorio ");
 		}
 
 		if (fieldError.getCode().equals(VALIDATION_LENGTH)) {

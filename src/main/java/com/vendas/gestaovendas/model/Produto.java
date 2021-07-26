@@ -11,7 +11,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
+import org.hibernate.validator.constraints.Length;
+
+ 
 @Entity
 @Table(name = "produto")
 public class Produto {
@@ -20,21 +25,28 @@ public class Produto {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long codigo;
 	
+	@NotBlank(message = "Descricao")
+	@Length(min = 3, max = 100, message = "descricao")
 	@Column(name = "descricao")
 	private String descricao;
 	
-	@Column(name = "quantidade")
+	@NotNull(message = "Quantidade")
+  	@Column(name = "quantidade")
 	private Integer quantidade;
 	
+	@NotNull(message = "Preço custo")
 	@Column(name = "preco_curto")
 	private BigDecimal precoCusto;
 	
+	@NotNull(message = "Preço venda")
 	@Column(name = "preco_venda")
 	private BigDecimal precoVenda;
 	
+	@Length(max = 500, message = "observacao")
 	@Column(name = "observacao")
 	private String observacao;
 	
+	@NotNull(message = "Codigo categoria ")
 	@ManyToOne
 	@JoinColumn(name = "codigo_categoria", referencedColumnName = "codigo")
  	private Categoria categoria;
