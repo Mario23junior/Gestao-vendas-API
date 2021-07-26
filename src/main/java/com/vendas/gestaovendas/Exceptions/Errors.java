@@ -2,8 +2,8 @@ package com.vendas.gestaovendas.Exceptions;
 
 public class Errors {
 
-	private String message;
 	private Integer status;
+	private String message;
 	private String msgDesenvolvedor;
 
 	public Errors(String message, String msgDesenvolvedor, Integer status) {
