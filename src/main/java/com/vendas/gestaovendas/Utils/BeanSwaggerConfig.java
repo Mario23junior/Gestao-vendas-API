@@ -16,7 +16,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 public class BeanSwaggerConfig {
    
 	private final String PACKAGE_BUILD = "com.vendas";
-	private final String TITLE_API = "Api de gestão de projetos";
+	private final String TITLE_API = "Api de gestão de vendas";
 	private final String DESCRITION = "api de gerenciamento e vendas de produtos";
 	private final String NAME_AUTOR = "Mario Junior";
 	private final String VERSION = "1.0.0";
