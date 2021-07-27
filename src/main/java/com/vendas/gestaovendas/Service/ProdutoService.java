@@ -51,6 +51,12 @@ public class ProdutoService {
  		}
  		return produto.get();
 	}
+	
+	public void deletar(Long codigoCategoria, Long codigoProduto) {
+		Produto produtodell = validarProdutoExist(codigoProduto, codigoCategoria);
+		produtoRepository.delete(produtodell);
+		
+	}
 
 	private void ValidarProdutoDuplicado(Produto produto) {
 		 Optional<Produto> findData = produtoRepository.findByCategoriaCodigoAndDescricao(produto.getCategoria().getCodigo(), produto.getDescricao());
