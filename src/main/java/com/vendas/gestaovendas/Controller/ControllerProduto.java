@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -50,4 +51,27 @@ public class ControllerProduto {
 		Produto salvarData = produtoService.salvar(produto);
 	   return ResponseEntity.status(HttpStatus.CREATED).body(salvarData);
 	}
+	
+	@ApiOperation(value = "Atualizando informacoes de produtos", nickname = "AtualizandoProduto")
+	@PutMapping("/{codigoProduto}")
+	public ResponseEntity<Produto> atualizar(@Valid @PathVariable Long codigoCategoria, @PathVariable Long codigoProduto, @RequestBody Produto produto){
+		Produto salvarNovosDados = produtoService.atualizar(codigoCategoria, codigoCategoria, produto);
+		return ResponseEntity.ok(salvarNovosDados);
+		
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
