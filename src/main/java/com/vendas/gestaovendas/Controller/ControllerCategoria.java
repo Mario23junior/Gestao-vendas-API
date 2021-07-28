@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.vendas.gestaovendas.Service.CategoriaService;
+import com.vendas.gestaovendas.dto.CategoriaRequestDTO;
 import com.vendas.gestaovendas.dto.CategoriaResponseDTO;
 import com.vendas.gestaovendas.model.Categoria;
 
@@ -56,11 +57,11 @@ public class ControllerCategoria {
 	
 	@ApiOperation(value = "Salvando dados",nickname = "save")
 	@PostMapping
-	public ResponseEntity<Categoria> save(@Valid @RequestBody Categoria categoria) {
-		 Categoria salvarCategoria = categoriaService.save(categoria);
+	public ResponseEntity<CategoriaResponseDTO> save(@Valid @RequestBody CategoriaRequestDTO categoriaDto) {
+		 Categoria salvarCategoria = categoriaService.save(categoriaDto.converterParaEntidade());
 		 return ResponseEntity
 				   .status(HttpStatus.CREATED)
-				   .body(salvarCategoria);
+				   .body(CategoriaResponseDTO.converterParaCategoriaDTO(salvarCategoria));
 	}
 	
 	@ApiOperation(value = "Atualizando dados",nickname = "update")
