@@ -2,6 +2,7 @@ package com.vendas.gestaovendas.Controller;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.vendas.gestaovendas.Service.CategoriaService;
+import com.vendas.gestaovendas.dto.CategoriaResponseDTO;
 import com.vendas.gestaovendas.model.Categoria;
 
 import io.swagger.annotations.Api;
@@ -36,8 +38,13 @@ public class ControllerCategoria {
 	
 	@ApiOperation(value = "Listar todos os dados",nickname = "buscarTodos")
 	@GetMapping
-	public List<Categoria> listAll(){
-		return categoriaService.listAllData();
+	public List<CategoriaResponseDTO> listAll(){
+		List<CategoriaResponseDTO> list = categoriaService.listAllData()
+				.stream()
+				.map(categoria -> CategoriaResponseDTO.converterParaCategoriaDTO(categoria))
+				.collect(Collectors.toList());
+		return list;
+		
 	}
 	
 	@ApiOperation(value = "Listando dados por id" ,nickname = "buscarPorId")
