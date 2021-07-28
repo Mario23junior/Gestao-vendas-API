@@ -25,6 +25,13 @@ public class Categoria {
 	@NotBlank(message = "Nome")
 	@Length(min = 3, max = 50, message = "Nome")
 	private String nome;
+	
+	public Categoria() {
+ 	}
+	
+	public Categoria(String nome) {
+ 		this.nome = nome;
+	}
 
 	public Long getCodigo() {
 		return codigo;
