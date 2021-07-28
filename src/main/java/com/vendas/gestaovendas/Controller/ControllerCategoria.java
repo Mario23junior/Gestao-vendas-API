@@ -49,9 +49,9 @@ public class ControllerCategoria {
 	
 	@ApiOperation(value = "Listando dados por id" ,nickname = "buscarPorId")
 	@GetMapping("/{codigo}")
-	public ResponseEntity<Optional<Categoria>> listById(@PathVariable Long codigo){
+	public ResponseEntity<CategoriaResponseDTO> listById(@PathVariable Long codigo){
 		Optional<Categoria> categoria = categoriaService.listByIdData(codigo);
-		return categoria.isPresent() ? ResponseEntity.ok(categoria) : ResponseEntity.notFound().build();
+		return categoria.isPresent() ? ResponseEntity.ok(CategoriaResponseDTO.converterParaCategoriaDTO(categoria.get())) : ResponseEntity.notFound().build();
  	}
 	
 	@ApiOperation(value = "Salvando dados",nickname = "save")
