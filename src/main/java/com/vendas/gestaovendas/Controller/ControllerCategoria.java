@@ -19,8 +19,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.vendas.gestaovendas.Service.CategoriaService;
-import com.vendas.gestaovendas.dto.CategoriaRequestDTO;
-import com.vendas.gestaovendas.dto.CategoriaResponseDTO;
+import com.vendas.gestaovendas.dto.categoria.CategoriaRequestDTO;
+import com.vendas.gestaovendas.dto.categoria.CategoriaResponseDTO;
 import com.vendas.gestaovendas.model.Categoria;
 
 import io.swagger.annotations.Api;
