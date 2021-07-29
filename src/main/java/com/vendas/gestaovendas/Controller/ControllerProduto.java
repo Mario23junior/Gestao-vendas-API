@@ -46,9 +46,9 @@ public class ControllerProduto {
 
 	@ApiOperation(value = "Listar por codigo", nickname = "buscarPorCodigo")
 	@GetMapping("/{codigo}")
-	public ResponseEntity<Optional<Produto>> listById(@PathVariable Long codigo, @PathVariable Long codigoCategoria) {
+	public ResponseEntity<ProdutoResponseDTO> listById(@PathVariable Long codigo, @PathVariable Long codigoCategoria) {
 		Optional<Produto> produto = produtoService.listProdutoById(codigo, codigoCategoria);
-		return produto.isPresent() ? ResponseEntity.ok(produto) : ResponseEntity.notFound().build();
+		return produto.isPresent() ? ResponseEntity.ok(ProdutoResponseDTO.converterParaProdutoDTO(produto.get())) : ResponseEntity.notFound().build();
 	}
 
 	@ApiOperation(value = "Salvando produto na base de dados", nickname = "SalvarProduto")
