@@ -66,8 +66,8 @@ public class ControllerCategoria {
 	
 	@ApiOperation(value = "Atualizando dados",nickname = "update")
 	@PutMapping("/{codigo}")
-	public ResponseEntity<Categoria> update(@PathVariable Long codigo, @Valid @RequestBody Categoria categoria) {
-		return ResponseEntity.ok(categoriaService.atualizarData(codigo, categoria));
+	public ResponseEntity<Categoria> update(@PathVariable Long codigo, @Valid @RequestBody CategoriaRequestDTO categoriaDto) {
+		return ResponseEntity.ok(categoriaService.atualizarData(codigo, categoriaDto.converterParaEntidade(codigo)));
 	}
 	
     
