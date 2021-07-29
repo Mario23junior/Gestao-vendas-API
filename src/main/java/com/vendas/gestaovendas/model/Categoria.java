@@ -29,6 +29,14 @@ public class Categoria {
 	public Categoria() {
  	}
 	
+
+	public Categoria(Long codigo,String nome) {
+		this.codigo = codigo;
+		this.nome = nome;
+	}
+
+
+
 	public Categoria(String nome) {
  		this.nome = nome;
 	}
