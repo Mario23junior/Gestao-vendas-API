@@ -14,42 +14,59 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-import org.hibernate.validator.constraints.Length;
-
- 
 @Entity
 @Table(name = "produto")
 public class Produto {
-   
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long codigo;
-	
+
 	@NotBlank(message = "Descricao")
-	@Length(min = 3, max = 100, message = "descricao")
-	@Column(name = "descricao")
 	private String descricao;
-	
-	@NotNull(message = "Quantidade")
-  	@Column(name = "quantidade")
+
+	@Column(name = "quantidade")
 	private Integer quantidade;
-	
+
 	@NotNull(message = "Preço custo")
 	@Column(name = "preco_curto")
 	private BigDecimal precoCusto;
-	
-	@NotNull(message = "Preço venda")
+
 	@Column(name = "preco_venda")
 	private BigDecimal precoVenda;
-	
-	@Length(max = 500, message = "observacao")
+
 	@Column(name = "observacao")
 	private String observacao;
-	
-	@NotNull(message = "Codigo categoria ")
+
 	@ManyToOne
 	@JoinColumn(name = "codigo_categoria", referencedColumnName = "codigo")
- 	private Categoria categoria;
+	private Categoria categoria;
+
+	public Produto() {
+ 	}
+	
+	public Produto(@NotBlank(message = "Descricao") String descricao, Integer quantidade,
+			@NotNull(message = "Preço custo") BigDecimal precoCusto, BigDecimal precoVenda, String observacao,
+			Categoria categoria) {
+		this.descricao = descricao;
+		this.quantidade = quantidade;
+		this.precoCusto = precoCusto;
+		this.precoVenda = precoVenda;
+		this.observacao = observacao;
+		this.categoria = categoria;
+	}
+	
+	public Produto( Long codigo, @NotBlank(message = "Descricao") String descricao, Integer quantidade,
+			@NotNull(message = "Preço custo") BigDecimal precoCusto, BigDecimal precoVenda, String observacao,
+			Categoria categoria) {
+		this.codigo = codigo;
+		this.descricao = descricao;
+		this.quantidade = quantidade;
+		this.precoCusto = precoCusto;
+		this.precoVenda = precoVenda;
+		this.observacao = observacao;
+		this.categoria = categoria;
+	}
 
 	public Long getCodigo() {
 		return codigo;
@@ -128,5 +145,3 @@ public class Produto {
 	}
 
 }
- 
-

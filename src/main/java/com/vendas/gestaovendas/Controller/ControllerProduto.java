@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.vendas.gestaovendas.Service.ProdutoService;
+import com.vendas.gestaovendas.dto.produto.ProdutoRequestDTO;
 import com.vendas.gestaovendas.dto.produto.ProdutoResponseDTO;
 import com.vendas.gestaovendas.model.Produto;
 
@@ -53,17 +54,16 @@ public class ControllerProduto {
 
 	@ApiOperation(value = "Salvando produto na base de dados", nickname = "SalvarProduto")
 	@PostMapping
-	public ResponseEntity<Produto> salvar(@Valid @RequestBody Produto produto, @PathVariable Long codigoCategoria) {
-		Produto salvarData = produtoService.salvar(produto, codigoCategoria);
-		return ResponseEntity.status(HttpStatus.CREATED).body(salvarData);
+	public ResponseEntity<ProdutoResponseDTO> salvar(@Valid @RequestBody ProdutoRequestDTO produto, @PathVariable Long codigoCategoria) {
+		Produto salvarData = produtoService.salvar(codigoCategoria,produto.converterParaEntidade(codigoCategoria));
+		return ResponseEntity.status(HttpStatus.CREATED).body(ProdutoResponseDTO.converterParaProdutoDTO(salvarData));
 	}
 
 	@ApiOperation(value = "Atualizando informacoes de produtos", nickname = "AtualizandoProduto")
 	@PutMapping("/{codigoProduto}")
-	public ResponseEntity<Produto> atualizar(@Valid @PathVariable Long codigoCategoria,
-			@PathVariable Long codigoProduto, @RequestBody Produto produto) {
-		Produto salvarNovosDados = produtoService.atualizar(codigoCategoria, codigoCategoria, produto);
-		return ResponseEntity.ok(salvarNovosDados);
+	public ResponseEntity<ProdutoResponseDTO> atualizar(@Valid @PathVariable Long codigoCategoria,@PathVariable Long codigoProduto, @RequestBody ProdutoRequestDTO produto) {
+		Produto salvarNovosDados = produtoService.atualizar(codigoCategoria, codigoCategoria, produto.converterParaEntidade(codigoCategoria, codigoProduto));
+		return ResponseEntity.ok(ProdutoResponseDTO.converterParaProdutoDTO(salvarNovosDados)); 
 	}
 
 	@ApiOperation(value = "deletando informacoes de produtos", nickname = "deletandoProduto")
