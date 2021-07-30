@@ -30,7 +30,7 @@ public class ProdutoService {
 		return produtoRepository.buscarPorCodigo(codigo, codigoCategoria);
 	}
 	
-	public Produto salvar(Produto produto , Long codigoCategoria) {
+	public Produto salvar(Long codigoCategoria , Produto produto) {
 		validarCategoriaDoProdutoExiste(codigoCategoria);
 		ValidarProdutoDuplicado(produto);
 		return produtoRepository.save(produto);
