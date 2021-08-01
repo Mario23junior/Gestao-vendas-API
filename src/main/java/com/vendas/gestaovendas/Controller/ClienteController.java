@@ -4,9 +4,12 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -45,6 +48,13 @@ public class ClienteController {
 		return cliente.isPresent() 
 				? ResponseEntity.ok(ClienteResponseDTO.converterPataClienteDTO(cliente.get())) 
 				: ResponseEntity.notFound().build();
+	}
+	
+	@ApiOperation(value = "Salvando clientes no banco de dados")
+	@PostMapping
+	public ResponseEntity<ClienteResponseDTO> salvar (@RequestBody Cliente cliente) {
+		Cliente ClienteData = clienteService.salvar(cliente);
+		return ResponseEntity.status(HttpStatus.CREATED).body(ClienteResponseDTO.converterPataClienteDTO(ClienteData));
 	}
 	
 	

@@ -6,4 +6,5 @@ import com.vendas.gestaovendas.model.Cliente;
 
 public interface ClienteRepository extends JpaRepository<Cliente, Long>{
 
+	Cliente findByNome(String nome);
 }
