@@ -20,13 +20,13 @@ public class ClienteResponseDTO {
 	@ApiModelProperty(value = "Ativo")
 	private Boolean ativo;
 
-	private EnderecoResponseDTO enderecoDTO;
+	private EnderecoRequestDTO enderecoDTO;
 
 	public ClienteResponseDTO() {
 	}
 
 	public ClienteResponseDTO(Long codigo, String nome, String telefone, Boolean ativo,
-			EnderecoResponseDTO enderecoDTO) {
+			EnderecoRequestDTO enderecoDTO) {
  		this.codigo = codigo;
 		this.nome = nome;
 		this.telefone = telefone;
@@ -35,7 +35,7 @@ public class ClienteResponseDTO {
 	}
 
 	public static ClienteResponseDTO converterPataClienteDTO(Cliente cliente) {
-		EnderecoResponseDTO clienteDTO = new EnderecoResponseDTO(cliente.getEndereco().getLogradouro(),
+		EnderecoRequestDTO clienteDTO = new EnderecoRequestDTO(cliente.getEndereco().getLogradouro(),
 				cliente.getEndereco().getNumero(), cliente.getEndereco().getComplemento(),
 				cliente.getEndereco().getBairro(), cliente.getEndereco().getCep(), cliente.getEndereco().getCidade(),
 				cliente.getEndereco().getEstado());
@@ -75,11 +75,11 @@ public class ClienteResponseDTO {
 		this.ativo = ativo;
 	}
 
-	public EnderecoResponseDTO getEnderecoDTO() {
+	public EnderecoRequestDTO getEnderecoDTO() {
 		return enderecoDTO;
 	}
 
-	public void setEnderecoDTO(EnderecoResponseDTO enderecoDTO) {
+	public void setEnderecoDTO(EnderecoRequestDTO enderecoDTO) {
 		this.enderecoDTO = enderecoDTO;
 	}
 
