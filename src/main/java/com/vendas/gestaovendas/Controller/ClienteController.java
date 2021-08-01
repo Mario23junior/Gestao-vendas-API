@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import javax.validation.Valid;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -53,7 +55,7 @@ public class ClienteController {
 	
 	@ApiOperation(value = "Salvando clientes no banco de dados")
 	@PostMapping
-	public ResponseEntity<ClienteResponseDTO> salvar (@RequestBody ClienteRequestDTO clienteDto) {
+	public ResponseEntity<ClienteResponseDTO> salvar (@Valid @RequestBody ClienteRequestDTO clienteDto) {
 		Cliente ClienteData = clienteService.salvar(clienteDto.converterParaEntidade());
 		return ResponseEntity.status(HttpStatus.CREATED).body(ClienteResponseDTO.converterPataClienteDTO(ClienteData));
 	}

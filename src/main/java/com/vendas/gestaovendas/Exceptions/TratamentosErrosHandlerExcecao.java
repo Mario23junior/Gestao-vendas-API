@@ -23,6 +23,8 @@ public class TratamentosErrosHandlerExcecao extends ResponseEntityExceptionHandl
 	private final static String VALIDATION_NOT_BLANK = "NotBlank";
 	private final static String VALIDATION_NOT_NULL = "NotNull";
 	private final static String VALIDATION_LENGTH = "Length";
+	private final static String VALIDATION_PATTERN = "Pattern";
+
 
 	@Override
 	protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,HttpHeaders headers, HttpStatus status, WebRequest request) {
@@ -85,6 +87,9 @@ public class TratamentosErrosHandlerExcecao extends ResponseEntityExceptionHandl
 			return fieldError.getDefaultMessage().concat(String.format(" deve ter entre %s e %s caracteres.",
 					fieldError.getArguments()[2], fieldError.getArguments()[1]));
 		}
+		if (fieldError.getCode().equals(VALIDATION_PATTERN)) {
+			return fieldError.getDefaultMessage().concat(String.format(" Formato de numero inserindo incorreto"));
+ 		}
 		return fieldError.toString();
 	}
 }

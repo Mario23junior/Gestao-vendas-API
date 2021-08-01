@@ -1,5 +1,12 @@
 package com.vendas.gestaovendas.dto.Cliente;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+
+import org.hibernate.validator.constraints.Length;
+
 import com.vendas.gestaovendas.model.Cliente;
 import com.vendas.gestaovendas.model.Endereco;
 
@@ -8,15 +15,22 @@ import io.swagger.annotations.ApiModelProperty;
 public class ClienteRequestDTO {
 
 	@ApiModelProperty(value = "Nome")
+	@NotBlank(message = "Nome")
+	@Length(min = 3, max = 50, message = "Nome")
 	private String nome;
 
+	@NotBlank(message = "Telefone")
 	@ApiModelProperty(value = "Telefone")
+	@Pattern(regexp = "[\\d]{5}-[\\d]{3}", message = "Telefone")
 	private String telefone;
 
+	@NotNull(message = "Ativo")
 	@ApiModelProperty(value = "Ativo")
 	private Boolean ativo;
 
-	@ApiModelProperty(value = "Endereco")
+ 	@ApiModelProperty(value = "Endereco")
+ 	@NotNull
+ 	@Valid
 	private EnderecoRequestDTO enderecoDto;
 
 	public Cliente converterParaEntidade() {
