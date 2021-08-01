@@ -1,5 +1,11 @@
 package com.vendas.gestaovendas.dto.Cliente;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+
+import org.hibernate.validator.constraints.Length;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -7,23 +13,37 @@ import io.swagger.annotations.ApiModelProperty;
 public class EnderecoRequestDTO {
    
 	@ApiModelProperty(value = "Logradouro")
- 	private String logradouro;
+	@NotBlank(message = "Logradouro")
+	@Length(min = 3, max = 50, message = "Logradouro")
+  	private String logradouro;
 
+	@NotNull(message = "Numero")
 	@ApiModelProperty(value = "Numero")
  	private Integer numero;
 
 	@ApiModelProperty(value = "Complemento")
+	@Length(min = 3, max = 50)
  	private String complemento;
  
 	@ApiModelProperty(value = "Bairro")
- 	private String bairro;
+	@NotBlank(message = "Logradouro")
+	@Length(min = 3, max = 50, message = "Bairro")
+  	private String bairro;
 
 	@ApiModelProperty(value = "Cep")
+	@NotBlank(message = "Cep")
+	@Length(min = 3, max = 50, message = "Cep")
+	@Pattern(regexp = "[\\d]{5}-[\\d]{3}", message = "Cep")
  	private String cep;
 
+	
 	@ApiModelProperty(value = "Cidade")
+	@NotBlank(message = "cidade")
+	@Length(min = 3, max = 30, message = "cidade")
  	private String cidade;
 
+	@NotBlank(message = "Estado")
+	@Length(min = 3, max = 50, message = "Estado")
 	@ApiModelProperty(value = "Estado")
  	private String estado;
 
