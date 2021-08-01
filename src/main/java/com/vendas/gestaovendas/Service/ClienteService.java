@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import com.vendas.gestaovendas.Exceptions.RegraNegocioDuplicateDataException;
 import com.vendas.gestaovendas.model.Cliente;
 import com.vendas.gestaovendas.repository.ClienteRepository;
 
@@ -23,5 +24,17 @@ public class ClienteService {
 	
 	public Optional<Cliente> listById(Long codigo) {
 		return clienteRepository.findById(codigo);
+	}
+	
+	public Cliente salvar(Cliente cliente) {
+		validarClienteDuplicado(cliente);
+		return clienteRepository.save(cliente);
+	}
+	
+	private void validarClienteDuplicado(Cliente cliente ) {
+		Cliente findCliente = clienteRepository.findByNome(cliente.getNome());
+		if(findCliente != null && findCliente.getCodigo() != cliente.getCodigo()) {
+			throw new RegraNegocioDuplicateDataException(String.format("O cliente %s  já esta cadastrado", cliente.getNome().toUpperCase()));
+		}
 	}
 }
