@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.vendas.gestaovendas.Service.ClienteService;
+import com.vendas.gestaovendas.dto.Cliente.ClienteRequestDTO;
 import com.vendas.gestaovendas.dto.Cliente.ClienteResponseDTO;
 import com.vendas.gestaovendas.model.Cliente;
 
@@ -52,8 +53,8 @@ public class ClienteController {
 	
 	@ApiOperation(value = "Salvando clientes no banco de dados")
 	@PostMapping
-	public ResponseEntity<ClienteResponseDTO> salvar (@RequestBody Cliente cliente) {
-		Cliente ClienteData = clienteService.salvar(cliente);
+	public ResponseEntity<ClienteResponseDTO> salvar (@RequestBody ClienteRequestDTO clienteDto) {
+		Cliente ClienteData = clienteService.salvar(clienteDto.converterParaEntidade());
 		return ResponseEntity.status(HttpStatus.CREATED).body(ClienteResponseDTO.converterPataClienteDTO(ClienteData));
 	}
 	

@@ -4,7 +4,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 @ApiModel(value = "Endereço retorno DTO")
-public class EnderecoResponseDTO {
+public class EnderecoRequestDTO {
    
 	@ApiModelProperty(value = "Logradouro")
  	private String logradouro;
@@ -27,10 +27,9 @@ public class EnderecoResponseDTO {
 	@ApiModelProperty(value = "Estado")
  	private String estado;
 
-	public EnderecoResponseDTO(String logradouro, Integer numero, String complemento, String bairro, String cep,
+	public EnderecoRequestDTO(String logradouro, Integer numero, String complemento, String bairro, String cep,
 			String cidade, String estado) {
-		super();
-		this.logradouro = logradouro;
+ 		this.logradouro = logradouro;
 		this.numero = numero;
 		this.complemento = complemento;
 		this.bairro = bairro;
