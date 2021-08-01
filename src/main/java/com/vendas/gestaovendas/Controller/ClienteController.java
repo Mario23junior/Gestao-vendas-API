@@ -2,6 +2,7 @@ package com.vendas.gestaovendas.Controller;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.vendas.gestaovendas.Service.ClienteService;
+import com.vendas.gestaovendas.dto.Cliente.ClienteResponseDTO;
 import com.vendas.gestaovendas.model.Cliente;
 
 import io.swagger.annotations.Api;
@@ -28,17 +30,22 @@ public class ClienteController {
 
 	@ApiOperation(value = "Listar todos os dados", nickname = "buscarTodos")
 	@GetMapping
-	public List<Cliente> listAll() {
-		return clienteService.listAll();
+	public List<ClienteResponseDTO> listAll() {
+		return clienteService.listAll()
+				.stream()
+				.map(cliente -> ClienteResponseDTO.converterPataClienteDTO(cliente))
+				.collect(Collectors.toList());
 
 	}
 
-	@ApiOperation(value = "Listando dados por id", nickname = "buscarPorId")
+	@ApiOperation(value = "Listando dados por id", nickname = "buscarClientePorId")
 	@GetMapping("/{codigo}")
-	public ResponseEntity<Cliente> listById(@PathVariable Long codigo) {
+	public ResponseEntity<ClienteResponseDTO> listById(@PathVariable Long codigo) {
 		Optional<Cliente> cliente = clienteService.listById(codigo);
 		return cliente.isPresent() 
-				? ResponseEntity.ok(cliente.get()) 
+				? ResponseEntity.ok(ClienteResponseDTO.converterPataClienteDTO(cliente.get())) 
 				: ResponseEntity.notFound().build();
 	}
+	
+	
 }
