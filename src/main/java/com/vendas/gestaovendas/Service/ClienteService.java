@@ -55,7 +55,39 @@ public class ClienteService {
 		}
 		return BuscaCliente.get();
 	}
+	
+	public void deletar (Long codigo) {
+		clienteRepository.deleteById(codigo);
+	}
+	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
