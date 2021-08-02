@@ -34,8 +34,7 @@ public class Endereco {
 	
 	public Endereco(String logradouro, Integer numero, String complemento, String bairro, String cep, String cidade,
 			String estado) {
-		super();
-		this.logradouro = logradouro;
+ 		this.logradouro = logradouro;
 		this.numero = numero;
 		this.complemento = complemento;
 		this.bairro = bairro;

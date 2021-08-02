@@ -3,6 +3,8 @@ package com.vendas.gestaovendas.Service;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.BeanUtils;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.vendas.gestaovendas.Exceptions.RegraNegocioDuplicateDataException;
@@ -37,4 +39,38 @@ public class ClienteService {
 			throw new RegraNegocioDuplicateDataException(String.format("O cliente %s  já esta cadastrado", cliente.getNome().toUpperCase()));
 		}
 	}
+	
+	
+	public Cliente atualizar(Long Codigo, Cliente cliente) {
+	   Cliente clienteAtualizar = validarCliente(Codigo);
+	   validarClienteDuplicado(cliente);
+	   BeanUtils.copyProperties(cliente, clienteAtualizar, "codigo");
+	   return clienteRepository.save(clienteAtualizar);
+	}
+	
+	private Cliente validarCliente(Long codigo) {
+		Optional<Cliente> BuscaCliente = listById(codigo);
+		if(BuscaCliente.isEmpty()) {
+			throw new EmptyResultDataAccessException(1);
+		}
+		return BuscaCliente.get();
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
