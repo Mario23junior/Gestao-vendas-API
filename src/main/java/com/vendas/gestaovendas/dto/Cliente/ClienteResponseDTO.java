@@ -24,6 +24,7 @@ public class ClienteResponseDTO {
 
 	public ClienteResponseDTO() {
 	}
+	
 
 	public ClienteResponseDTO(Long codigo, String nome, String telefone, Boolean ativo,
 			EnderecoRequestDTO enderecoDTO) {
@@ -42,6 +43,7 @@ public class ClienteResponseDTO {
 		
 		return new ClienteResponseDTO(cliente.getCodigo(), cliente.getNome(), cliente.getTelefone(),cliente.getAtivo(),clienteDTO);
 	}
+	
 
 	public Long getCodigo() {
 		return codigo;
