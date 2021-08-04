@@ -18,6 +18,13 @@ public class VendaResponseDTO {
 	
 	@ApiModelProperty(value = "Itens da venda")
 	private List<ItemVendaResponseDTO> itemVendaDTOs;
+	
+	public VendaResponseDTO(Long codigo, LocalDate data, List<ItemVendaResponseDTO> itemVendaDTOs) {
+		super();
+		this.codigo = codigo;
+		this.data = data;
+		this.itemVendaDTOs = itemVendaDTOs;
+	}
 
 	public LocalDate getData() {
 		return data;
