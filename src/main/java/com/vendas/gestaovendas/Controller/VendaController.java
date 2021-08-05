@@ -28,4 +28,10 @@ public class VendaController {
 	public ResponseEntity<ClienteVendaResponseDTO> listarVendaPorCliente(@PathVariable Long codigoCliente) {
 		return ResponseEntity.ok(vendaServico.listVendaproCliente(codigoCliente));
 	}
+	
+	@ApiOperation(value = "Listar venda por codigo", nickname = "listando vendas por codigo")
+	@GetMapping("/{codigoVenda}")
+	public ResponseEntity<ClienteVendaResponseDTO> listarVendaPorCodigo(@PathVariable Long codigoVenda) {
+		return ResponseEntity.ok(vendaServico.listaVendaPorCodigo(codigoVenda));
+	}
 }
