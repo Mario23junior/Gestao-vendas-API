@@ -1,5 +1,6 @@
 package com.vendas.gestaovendas.Service;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -13,8 +14,8 @@ import com.vendas.gestaovendas.dto.Venda.VendaResponseDTO;
 import com.vendas.gestaovendas.model.Cliente;
 import com.vendas.gestaovendas.model.ItemVenda;
 import com.vendas.gestaovendas.model.Venda;
-import com.vendas.gestaovendas.repository.VendaRepository;
 import com.vendas.gestaovendas.repository.ItemVendaRepository;
+import com.vendas.gestaovendas.repository.VendaRepository;
 
 @Service
 public class vendaServico {
@@ -38,6 +39,11 @@ public class vendaServico {
 		
 		return new ClienteVendaResponseDTO(cliente.getNome(), vendaResponseDtoList);
 	}
+	
+	public ClienteVendaResponseDTO listaVendaPorCodigo(Long codigoVenda) {
+		Venda venda = validarVendaExiste(codigoVenda);
+ 		return new ClienteVendaResponseDTO(venda.getCliente().getNome(), Arrays.asList(criandoVendaResponseDTO(venda)));
+	}
 
 	private Cliente validarObjetoVendaExiste(Long codigoCliente) {
 		Optional<Cliente> buscaCodigo = clienteService.listById(codigoCliente);
@@ -47,6 +53,7 @@ public class vendaServico {
 		}
 		return buscaCodigo.get();
 	}
+	
 
 	private VendaResponseDTO criandoVendaResponseDTO(Venda venda) {
       List<ItemVendaResponseDTO> itensVendaResponseDto = itemVendaRepository.findByVendaCodigo(venda.getCodigo())
@@ -56,6 +63,16 @@ public class vendaServico {
    
       return new VendaResponseDTO(venda.getCodigo(), venda.getDate(), itensVendaResponseDto);
 	}
+	
+
+	 private Venda validarVendaExiste(Long CodigoVenda) {
+		 Optional<Venda> vendaId = vendaRepository.findById(CodigoVenda);
+		 if(vendaId.isEmpty()) {
+			 throw new RegraNegocioDuplicateDataException(String.format("Codigo da venda %s não encontrada.", CodigoVenda));
+		 }
+		 return vendaId.get();
+ 	 }
+	
 	
 	private ItemVendaResponseDTO criandoItensResponseDto(ItemVenda itemVenda) {
 		return new ItemVendaResponseDTO(itemVenda.getCodigo(), itemVenda.getQuantidade(),
