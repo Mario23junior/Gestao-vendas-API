@@ -31,7 +31,7 @@ public class vendaServico {
 
 	public ClienteVendaResponseDTO listVendaproCliente(Long codigoCliente) {
 		Cliente cliente = validarObjetoVendaExiste(codigoCliente);
-		List<VendaResponseDTO> vendaResponseDtoList = vendaRepository.FindByClienteCodigo(codigoCliente)
+		List<VendaResponseDTO> vendaResponseDtoList = vendaRepository.findByClienteCodigo(codigoCliente)
 		.stream()
 		.map(this::criandoVendaResponseDTO)
 		.collect(Collectors.toList());
