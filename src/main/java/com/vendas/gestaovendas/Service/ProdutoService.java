@@ -65,8 +65,11 @@ public class ProdutoService {
 	
 	public void deletar(Long codigoCategoria, Long codigoProduto) {
 		Produto produtodell = validarProdutoExist(codigoProduto, codigoCategoria);
-		produtoRepository.delete(produtodell);
-		
+		produtoRepository.delete(produtodell);	
+	}
+	
+	protected void atualizarQuantidadeAposVenda(Produto produto) {
+		produtoRepository.save(produto);
 	}
 
 	private void ValidarProdutoDuplicado(Produto produto) {

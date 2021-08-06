@@ -13,6 +13,7 @@ import com.vendas.gestaovendas.dto.Venda.VendaRequestDTO;
 import com.vendas.gestaovendas.dto.Venda.VendaResponseDTO;
 import com.vendas.gestaovendas.model.Cliente;
 import com.vendas.gestaovendas.model.ItemVenda;
+import com.vendas.gestaovendas.model.Produto;
 import com.vendas.gestaovendas.model.Venda;
 import com.vendas.gestaovendas.repository.ItemVendaRepository;
 import com.vendas.gestaovendas.repository.VendaRepository;
@@ -50,7 +51,7 @@ public class vendaServico extends AbstractVendaService {
 
 	public ClienteVendaResponseDTO Salvar(Long codigoCliente, VendaRequestDTO vendaDto) {
 		Cliente cliente = validarObjetoVendaExiste(codigoCliente);
-		validarProdutoExiste(vendaDto.getItensVendaDto());
+		validarProdutoExisteEatualizarQuantidade(vendaDto.getItensVendaDto());
 		Venda vendaSalva = salvarVenda(cliente, vendaDto);
 		List<ItemVenda> saveItems = itemVendaRepository.findByVendaPorCodigo(vendaSalva.getCodigo());
 
@@ -65,9 +66,23 @@ public class vendaServico extends AbstractVendaService {
 		return salvaVenda;
 	}
 
-	private void validarProdutoExiste(List<ItemVendaRequestDTO> itensVendaDto) {
-		itensVendaDto.forEach(item -> produtoService.validarProdutoExist(item.getCodigoProduto()));
+	private void validarProdutoExisteEatualizarQuantidade(List<ItemVendaRequestDTO> itensVendaDto) {
+		itensVendaDto.forEach(item -> {
+		  Produto produto = produtoService.validarProdutoExist(item.getCodigoProduto());
+		   validarProdutoQuantidadeProdutoExiste(produto, item.getQuantidade());
+		   produto.setQuantidade(produto.getQuantidade() - item.getQuantidade());
+		   produtoService.atualizarQuantidadeAposVenda(produto);
+		   
+		});
 	}
+	
+	private void validarProdutoQuantidadeProdutoExiste(Produto produto, Integer qtdeVendaDto) {
+		if(!(produto.getQuantidade() >= qtdeVendaDto)) {
+			throw new RegraNegocioDuplicateDataException(String.format("A quantidade %s solicitada para o produto %s não esta disponivel em estoque", 
+					qtdeVendaDto, produto.getDescricao()));
+		}
+	}
+	
 
 	private Cliente validarObjetoVendaExiste(Long codigoCliente) {
 		Optional<Cliente> buscaCodigo = clienteService.listById(codigoCliente);
