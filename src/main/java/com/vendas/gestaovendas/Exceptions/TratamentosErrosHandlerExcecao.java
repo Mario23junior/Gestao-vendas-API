@@ -24,41 +24,44 @@ public class TratamentosErrosHandlerExcecao extends ResponseEntityExceptionHandl
 	private final static String VALIDATION_NOT_NULL = "NotNull";
 	private final static String VALIDATION_LENGTH = "Length";
 	private final static String VALIDATION_PATTERN = "Pattern";
-
+	private final static String VALIDATION_MIN = "Min";
 
 	@Override
-	protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,HttpHeaders headers, HttpStatus status, WebRequest request) {
+	protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
+			HttpHeaders headers, HttpStatus status, WebRequest request) {
 
 		List<Errors> errors = GerarListaDeErros(ex.getBindingResult());
 		return handleExceptionInternal(ex, errors, headers, HttpStatus.BAD_REQUEST, request);
 	}
-	
+
 	@ExceptionHandler(EmptyResultDataAccessException.class)
-	public ResponseEntity<Object> handlerEmptyResultDataAcessException(EmptyResultDataAccessException ex, WebRequest request) {
-	   String msgUsuario = "Recurso não encontrado";
-	   String msgDesenvolvedor = ex.toString();
-	   Integer statuscode = HttpStatus.BAD_REQUEST.value();
-	   List<Errors> erro = Arrays.asList(new Errors(msgUsuario, msgDesenvolvedor,statuscode));
-	   return handleExceptionInternal(ex, erro, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
+	public ResponseEntity<Object> handlerEmptyResultDataAcessException(EmptyResultDataAccessException ex,
+			WebRequest request) {
+		String msgUsuario = "Recurso não encontrado";
+		String msgDesenvolvedor = ex.toString();
+		Integer statuscode = HttpStatus.BAD_REQUEST.value();
+		List<Errors> erro = Arrays.asList(new Errors(msgUsuario, msgDesenvolvedor, statuscode));
+		return handleExceptionInternal(ex, erro, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
 	}
-	
-	
+
 	@ExceptionHandler(RegraNegocioDuplicateDataException.class)
-	public ResponseEntity<Object> handleRegraNegocioDuplicateDataException(RegraNegocioDuplicateDataException ex, WebRequest request){
-		 String msgUsuario = ex.getMessage();
-		   String msgDesenvolvedor = ex.getMessage();
-		   Integer statuscode = HttpStatus.BAD_REQUEST.value();
-		   List<Errors> erro = Arrays.asList(new Errors(msgUsuario, msgDesenvolvedor,statuscode));
-		   return handleExceptionInternal(ex, erro, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+	public ResponseEntity<Object> handleRegraNegocioDuplicateDataException(RegraNegocioDuplicateDataException ex,
+			WebRequest request) {
+		String msgUsuario = ex.getMessage();
+		String msgDesenvolvedor = ex.getMessage();
+		Integer statuscode = HttpStatus.BAD_REQUEST.value();
+		List<Errors> erro = Arrays.asList(new Errors(msgUsuario, msgDesenvolvedor, statuscode));
+		return handleExceptionInternal(ex, erro, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
 	}
-	
+
 	@ExceptionHandler(DataIntegrityViolationException.class)
-	public ResponseEntity<Object> handleDataIntegrityViolationException(DataIntegrityViolationException ex, WebRequest request){
-		 String msgUsuario = "Recuso não encontrado";
-		   String msgDesenvolvedor = ex.toString();
-		   Integer statuscode = HttpStatus.BAD_REQUEST.value();
-		   List<Errors> erro = Arrays.asList(new Errors(msgUsuario, msgDesenvolvedor,statuscode));
-		   return handleExceptionInternal(ex, erro, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+	public ResponseEntity<Object> handleDataIntegrityViolationException(DataIntegrityViolationException ex,
+			WebRequest request) {
+		String msgUsuario = "Recuso não encontrado";
+		String msgDesenvolvedor = ex.toString();
+		Integer statuscode = HttpStatus.BAD_REQUEST.value();
+		List<Errors> erro = Arrays.asList(new Errors(msgUsuario, msgDesenvolvedor, statuscode));
+		return handleExceptionInternal(ex, erro, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
 	}
 
 	private List<Errors> GerarListaDeErros(BindingResult bindingResult) {
@@ -78,7 +81,7 @@ public class TratamentosErrosHandlerExcecao extends ResponseEntityExceptionHandl
 		if (fieldError.getCode().equals(VALIDATION_NOT_BLANK)) {
 			return fieldError.getDefaultMessage().concat(" é obrigatorio");
 		}
-		
+
 		if (fieldError.getCode().equals(VALIDATION_NOT_NULL)) {
 			return fieldError.getDefaultMessage().concat(" é obrigatorio ");
 		}
@@ -89,7 +92,11 @@ public class TratamentosErrosHandlerExcecao extends ResponseEntityExceptionHandl
 		}
 		if (fieldError.getCode().equals(VALIDATION_PATTERN)) {
 			return fieldError.getDefaultMessage().concat(String.format(" Formato de numero inserindo incorreto"));
- 		}
+		}
+		if (fieldError.getCode().equals(VALIDATION_MIN)) {
+			return fieldError.getDefaultMessage().concat(String.format("O Formato deve ser maior ou igual a %s",
+					fieldError.getArguments()[1]));
+		}
 		return fieldError.toString();
 	}
 }
