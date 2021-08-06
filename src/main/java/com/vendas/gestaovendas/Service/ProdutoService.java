@@ -44,6 +44,17 @@ public class ProdutoService {
 	   return produtoRepository.save(produtoSalvar);
 	}
 	
+	
+
+	
+	protected Produto validarProdutoExist(Long codigoProduto) {
+ 		Optional<Produto> produto = produtoRepository.findById(codigoProduto);
+ 		if(produto.isEmpty()) {
+ 			throw new RegraNegocioDuplicateDataException(String.format("Produto de codigo %s não encontrado", codigoProduto));
+ 		}
+ 		return produto.get();
+	}
+	
 	private Produto validarProdutoExist(Long codigoProduto, Long codigoCategoria) {
  		Optional<Produto> produto = listProdutoById(codigoProduto, codigoCategoria);
  		if(produto.isEmpty()) {
