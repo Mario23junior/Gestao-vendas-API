@@ -38,7 +38,7 @@ public class vendaServico extends AbstractVendaService {
 	public ClienteVendaResponseDTO listVendaproCliente(Long codigoCliente) {
 		Cliente cliente = validarObjetoVendaExiste(codigoCliente);
 		List<VendaResponseDTO> vendaResponseDtoList = vendaRepository.findByClienteCodigo(codigoCliente).stream()
-				.map(venda -> criandoVendaResponseDTO(venda, itemVendaRepository.findByVendaCodigo(venda.getCodigo())))
+				.map(venda -> criandoVendaResponseDTO(venda, itemVendaRepository.findByVendaPorCodigo(venda.getCodigo())))
 				.collect(Collectors.toList());
 
 		return new ClienteVendaResponseDTO(cliente.getNome(), vendaResponseDtoList);
@@ -46,7 +46,7 @@ public class vendaServico extends AbstractVendaService {
 
 	public ClienteVendaResponseDTO listaVendaPorCodigo(Long codigoVenda) {
 		Venda venda = validarVendaExiste(codigoVenda);
-		List<ItemVenda> itensVendaList = itemVendaRepository.findByVendaCodigo(venda.getCodigo());
+		List<ItemVenda> itensVendaList = itemVendaRepository.findByVendaPorCodigo(venda.getCodigo());
 		return new ClienteVendaResponseDTO(venda.getCliente().getNome(),
 				Arrays.asList(criandoVendaResponseDTO(venda, itensVendaList)));
 	}
@@ -57,7 +57,7 @@ public class vendaServico extends AbstractVendaService {
 		Venda vendaSalva = salvarVenda(cliente, vendaDto);
 
 		return new ClienteVendaResponseDTO(vendaSalva.getCliente().getNome(), Arrays.asList(
-				(criandoVendaResponseDTO(vendaSalva, itemVendaRepository.findByVendaCodigo(vendaSalva.getCodigo())))));
+				(criandoVendaResponseDTO(vendaSalva, itemVendaRepository.findByVendaPorCodigo(vendaSalva.getCodigo())))));
 	}
 
 	private Venda salvarVenda(Cliente cliente, VendaRequestDTO vendaDto) {
