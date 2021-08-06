@@ -1,6 +1,5 @@
 package com.vendas.gestaovendas.Service;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -14,7 +13,6 @@ import com.vendas.gestaovendas.dto.Venda.VendaRequestDTO;
 import com.vendas.gestaovendas.dto.Venda.VendaResponseDTO;
 import com.vendas.gestaovendas.model.Cliente;
 import com.vendas.gestaovendas.model.ItemVenda;
-import com.vendas.gestaovendas.model.Produto;
 import com.vendas.gestaovendas.model.Venda;
 import com.vendas.gestaovendas.repository.ItemVendaRepository;
 import com.vendas.gestaovendas.repository.VendaRepository;
@@ -47,18 +45,18 @@ public class vendaServico extends AbstractVendaService {
 	public ClienteVendaResponseDTO listaVendaPorCodigo(Long codigoVenda) {
 		Venda venda = validarVendaExiste(codigoVenda);
 		List<ItemVenda> itensVendaList = itemVendaRepository.findByVendaPorCodigo(venda.getCodigo());
-		return new ClienteVendaResponseDTO(venda.getCliente().getNome(),
-				Arrays.asList(criandoVendaResponseDTO(venda, itensVendaList)));
+		return refatorandoClienteVendaResponseDTO(venda, itensVendaList);
 	}
 
 	public ClienteVendaResponseDTO Salvar(Long codigoCliente, VendaRequestDTO vendaDto) {
 		Cliente cliente = validarObjetoVendaExiste(codigoCliente);
 		validarProdutoExiste(vendaDto.getItensVendaDto());
 		Venda vendaSalva = salvarVenda(cliente, vendaDto);
+		List<ItemVenda> saveItems = itemVendaRepository.findByVendaPorCodigo(vendaSalva.getCodigo());
 
-		return new ClienteVendaResponseDTO(vendaSalva.getCliente().getNome(), Arrays.asList(
-				(criandoVendaResponseDTO(vendaSalva, itemVendaRepository.findByVendaPorCodigo(vendaSalva.getCodigo())))));
+		return refatorandoClienteVendaResponseDTO(vendaSalva, saveItems);
 	}
+	
 
 	private Venda salvarVenda(Cliente cliente, VendaRequestDTO vendaDto) {
 		Venda salvaVenda = vendaRepository.save(new Venda(vendaDto.getDate(), cliente));
@@ -87,10 +85,5 @@ public class vendaServico extends AbstractVendaService {
 					String.format("Codigo da venda %s não encontrada.", CodigoVenda));
 		}
 		return vendaId.get();
-	}
-
-	private ItemVenda criandoItemVenda(ItemVendaRequestDTO itemVendaDto, Venda venda) {
-		return new ItemVenda(itemVendaDto.getQuantidade(), itemVendaDto.getPrecoVendido(),
-				new Produto(itemVendaDto.getCodigoProduto()), venda);
 	}
 }
