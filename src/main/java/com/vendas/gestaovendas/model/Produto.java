@@ -44,7 +44,13 @@ public class Produto {
 
 	public Produto() {
  	}
-	
+
+	public Produto(Long codigo) {
+ 		this.codigo = codigo;
+	}
+
+
+
 	public Produto(@NotBlank(message = "Descricao") String descricao, Integer quantidade,
 			@NotNull(message = "Preço custo") BigDecimal precoCusto, BigDecimal precoVenda, String observacao,
 			Categoria categoria) {

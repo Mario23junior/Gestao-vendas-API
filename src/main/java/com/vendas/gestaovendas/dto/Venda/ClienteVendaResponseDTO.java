@@ -1,6 +1,6 @@
 package com.vendas.gestaovendas.dto.Venda;
 
-import java.util.List;
+import java.util.List; 
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -18,7 +18,7 @@ public class ClienteVendaResponseDTO {
 		this.nome = nome;
 		this.vendasResponse = vendasResponse;
 	}
-
+ 
 	public String getNome() {
 		return nome;
 	}
