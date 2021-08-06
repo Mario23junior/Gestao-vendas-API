@@ -40,6 +40,15 @@ public class ItemVenda {
 		// TODO Auto-generated constructor stub
 	}
 
+	public ItemVenda(Long codigo, Integer quantidade, BigDecimal precoVendido, Produto produto, Venda venda) {
+		super();
+		this.codigo = codigo;
+		this.quantidade = quantidade;
+		this.precoVendido = precoVendido;
+		this.produto = produto;
+		this.venda = venda;
+	}
+
 	public ItemVenda(Integer quantidade, BigDecimal precoVendido, Produto produto, Venda venda) {
 		super();
 		this.quantidade = quantidade;
