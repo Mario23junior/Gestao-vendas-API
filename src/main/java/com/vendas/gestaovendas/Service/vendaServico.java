@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -62,6 +61,24 @@ public class vendaServico extends AbstractVendaService {
 		return refatorandoClienteVendaResponseDTO(vendaSalva, saveItems);
 	}
 	
+	@Transactional(propagation = Propagation.REQUIRED, readOnly = false, rollbackFor = Exception.class)
+	public void deletar(Long codigoVenda) {
+		 validarVendaExiste(codigoVenda);
+		 List<ItemVenda> itensVenda = itemVendaRepository.findByVendaPorCodigo(codigoVenda);
+		 validarProdutoExisteDevolverEstoque(itensVenda);
+		 itemVendaRepository.deleteAll(itensVenda);
+		 vendaRepository.deleteById(codigoVenda);
+		 
+	}
+	
+	private void validarProdutoExisteDevolverEstoque(List<ItemVenda> itensVenda) {
+		itensVenda.forEach(item -> {
+			Produto produto = produtoService.validarProdutoExist(item.getProduto().getCodigo());
+			produto.setQuantidade(produto.getQuantidade() + item.getQuantidade());
+			produtoService.atualizarQuantidadeEmEstoque(produto);
+		});
+	}
+	
 
 	private Venda salvarVenda(Cliente cliente, VendaRequestDTO vendaDto) {
 		Venda salvaVenda = vendaRepository.save(new Venda(vendaDto.getDate(), cliente));
@@ -75,7 +92,7 @@ public class vendaServico extends AbstractVendaService {
 		  Produto produto = produtoService.validarProdutoExist(item.getCodigoProduto());
 		   validarProdutoQuantidadeProdutoExiste(produto, item.getQuantidade());
 		   produto.setQuantidade(produto.getQuantidade() - item.getQuantidade());
-		   produtoService.atualizarQuantidadeAposVenda(produto);
+		   produtoService.atualizarQuantidadeEmEstoque(produto);
 		   
 		});
 	}
