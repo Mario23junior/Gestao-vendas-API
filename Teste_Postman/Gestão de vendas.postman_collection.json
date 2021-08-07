@@ -1,0 +1,467 @@
+{
+	"info": {
+		"_postman_id": "c8c61436-b33b-43a9-83d3-abf461c93b6c",
+		"name": "Gestão de vendas",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Categorias",
+			"item": [
+				{
+					"name": "listando todoas as categorias por id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/v1/api/categorias/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"api",
+								"categorias",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listando todas as categorias da base",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/v1/api/categorias/",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"api",
+								"categorias",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Salvando categorias na base de dados",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nome\": \"Nerds\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/v1/api/categorias/",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"api",
+								"categorias",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Atualzando categorias por id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n     \"nome\": \"Nerd & Geek\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/v1/api/categorias/15",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"api",
+								"categorias",
+								"15"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deletando informacaoes por id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/v1/api/categorias/27",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"api",
+								"categorias",
+								"27"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Produto",
+			"item": [
+				{
+					"name": "Listando todos os produtos do banco de dados",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/categoria/4/produto/",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"categoria",
+								"4",
+								"produto",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listando os produtos da base por id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/categoria/1/produto/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"categoria",
+								"1",
+								"produto",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Salvando dados de produto no bbanco de dados",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"categoria\": {\n        \"codigo\": 4\n    },\n    \"descricao\": \"model de toalhas\",\n    \"observacao\": \"BRANCAS TV\",\n    \"precoCusto\": 23,\n    \"precoVenda\": 3,\n    \"quantidade\": 2\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/categoria/4/produto/",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"categoria",
+								"4",
+								"produto",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Atualizando dados de produto",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"codigo\": 29,\n    \"descricao\": \"Conjunto de toalhas\",\n    \"quantidade\": 34,\n    \"precoCusto\": 23.00,\n    \"precoVenda\": 3.00,\n    \"observacao\": \"BRANCAS - PRETA - GREY\",\n    \"categoria\": {\n        \"codigo\": 4,\n        \"nome\": \"Casa e Eletrodomésticos\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/categoria/4/produto/29",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"categoria",
+								"4",
+								"produto",
+								"29"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deletando informacao de produto",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/categoria/1/produto/4",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"categoria",
+								"1",
+								"produto",
+								"4"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Cliente",
+			"item": [
+				{
+					"name": "Listar todos os clientes por id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/cliente/",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"cliente",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "LIstando clintes por id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/cliente/12",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"cliente",
+								"12"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Salvando dados de clientes no banco de dados",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"ativo\": true,\n    \"enderecoDto\": {\n        \"bairro\": \"Pimotoua\",\n        \"cep\": \"04830-050\",\n        \"cidade\": \"São Paulo\",\n        \"complemento\": \"\",\n        \"estado\": \"São Paulo\",\n        \"logradouro\": \"Rua das pinhas\",\n        \"numero\": 233\n    },\n    \"nome\": \"Pedrita lima\",\n    \"telefone\": \"04042-2444\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/cliente/",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"cliente",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Atualizando informacoes de clientes",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"ativo\": true,\n    \"enderecoDto\": {\n        \"bairro\": \"alameda slin\",\n        \"cep\": \"04830-050\",\n        \"cidade\": \"São paulo\",\n        \"complemento\": \"casa dos alfino\",\n        \"estado\": \"São paulo\",\n        \"logradouro\": \"Rua rt\",\n        \"numero\": 932\n    },\n    \"nome\": \"Maria Rita\",\n    \"telefone\": \"94384-342\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/cliente/12",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"cliente",
+								"12"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deletando usuario por id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/cliente/12",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"cliente",
+								"12"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Venda",
+			"item": [
+				{
+					"name": "Listando todoas as vendas por cliente",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/v1/api/venda/cliente/3",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"api",
+								"venda",
+								"cliente",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listando vendas por id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/v1/api/venda/18",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"api",
+								"venda",
+								"18"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Salvando uma venda",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"date\": \"2021-03-09\",\n  \"itensVendaDto\": [\n    {\n      \"codigoProduto\": 1,\n      \"precoVendido\": 1000,\n      \"quantidade\": 2\n    },\n      {\n      \"codigoProduto\": 2,\n      \"precoVendido\": 2500.23,\n      \"quantidade\": 1\n    }\n  ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/v1/api/venda/cliente/4",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"api",
+								"venda",
+								"cliente",
+								"4"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
