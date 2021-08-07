@@ -4,7 +4,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.vendas.gestaovendas.Exceptions.RegraNegocioDuplicateDataException;
 import com.vendas.gestaovendas.dto.Venda.ClienteVendaResponseDTO;
@@ -49,6 +52,7 @@ public class vendaServico extends AbstractVendaService {
 		return refatorandoClienteVendaResponseDTO(venda, itensVendaList);
 	}
 
+	@Transactional(propagation = Propagation.REQUIRED, readOnly = false, rollbackFor = Exception.class)
 	public ClienteVendaResponseDTO Salvar(Long codigoCliente, VendaRequestDTO vendaDto) {
 		Cliente cliente = validarObjetoVendaExiste(codigoCliente);
 		validarProdutoExisteEatualizarQuantidade(vendaDto.getItensVendaDto());
