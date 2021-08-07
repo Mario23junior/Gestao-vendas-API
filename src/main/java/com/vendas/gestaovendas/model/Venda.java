@@ -34,6 +34,12 @@ public class Venda {
 
 	}
 	
+	public Venda(Long codigo, LocalDate date, Cliente cliente) {
+		this.codigo = codigo;
+  		this.date = date;
+		this.cliente = cliente;
+	}
+	
 	public Venda(LocalDate date, Cliente cliente) {
 		super();
  		this.date = date;

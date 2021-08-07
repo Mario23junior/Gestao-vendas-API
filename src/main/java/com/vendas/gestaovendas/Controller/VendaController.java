@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -55,4 +56,19 @@ public class VendaController {
 	public void delete (@PathVariable Long codigoVenda) {
 		vendaServico.deletar(codigoVenda);
 	}
+	
+	@ApiOperation(value = "Atualizando informações do banco de dados", nickname = "Atualizando informçãoes no banco de dados")
+	@PutMapping("/{codigoVenda}/cliente/{codigoCliente}")
+	public ResponseEntity<ClienteVendaResponseDTO> Atualizar(@PathVariable Long codigoCliente, @PathVariable Long codigoVenda, @Valid @RequestBody VendaRequestDTO vendaDto){
+		return ResponseEntity.ok(vendaServico.atualizar(codigoVenda, codigoCliente, vendaDto));
+	}
 }
+
+
+
+
+
+
+
+
+
